@@ -1,19 +1,38 @@
+import { useEffect, useRef } from 'react'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import BursaLogomarkSvg from '../../assets/Bursa Logomark.svg'
+import lottie from 'lottie-web'
+import carouselWelcomeUrl from '../../assets/lottie/carousel_welcome.json?url'
+import carouselStartUrl from '../../assets/lottie/carousel_start.json?url'
+import carouselQuickUrl from '../../assets/lottie/carousel_quick.json?url'
+import { colors } from '../../theme/colors'
+
+const ANIMATION_URLS = [carouselWelcomeUrl, carouselStartUrl, carouselQuickUrl]
 
 export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
   const nextIndex = (activeIndex + 1) % slides.length
   const currentSlide = slides[activeIndex]
+  const animContainerRef = useRef(null)
+
+  useEffect(() => {
+    const anim = lottie.loadAnimation({
+      container: animContainerRef.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: ANIMATION_URLS[activeIndex],
+    })
+    return () => anim.destroy()
+  }, [activeIndex])
 
   return (
     <Box
       sx={{
-        bgcolor: '#0A1764',
+        bgcolor: colors.navy,
         borderRadius: 3,
         p: { xs: 3, md: 4 },
         height: '100%',
@@ -29,75 +48,34 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
       <Typography
         variant="h5"
         sx={{
-          color: '#FFFFFF',
+          color: colors.white,
           fontWeight: 700,
           textAlign: 'center',
           mt: 2,
           lineHeight: 1.3,
+          whiteSpace: 'pre-line',
         }}
       >
         {currentSlide.title}
       </Typography>
 
-      {/* Decorative centre area */}
+      {/* Lottie animation */}
       <Box
         sx={{
           flex: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          py: 3,
-          position: 'relative',
+          py: 2,
         }}
       >
-        {/* Large coin (Bursa Logomark) */}
-        <Box
-          component="img"
-          src={BursaLogomarkSvg}
-          alt="Bursa Malaysia"
-          sx={{
-            width: 180,
-            height: 180,
-            opacity: 0.95,
-            filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.4))',
-          }}
-        />
-        {/* Small coin top-right */}
-        <Box
-          component="img"
-          src={BursaLogomarkSvg}
-          alt=""
-          sx={{
-            width: 80,
-            height: 80,
-            position: 'absolute',
-            top: 8,
-            right: { xs: 16, md: 40 },
-            opacity: 0.85,
-            filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))',
-          }}
-        />
-        {/* Small coin bottom-left */}
-        <Box
-          component="img"
-          src={BursaLogomarkSvg}
-          alt=""
-          sx={{
-            width: 72,
-            height: 72,
-            position: 'absolute',
-            bottom: 8,
-            left: { xs: 16, md: 40 },
-            opacity: 0.85,
-            filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))',
-          }}
-        />
+        <div ref={animContainerRef} style={{ width: '100%', maxWidth: 320 }} />
       </Box>
 
       {/* Bottom carousel bar */}
       <Box
         sx={{
-          bgcolor: 'rgba(255,255,255,0.08)',
+          bgcolor: colors.carouselBar,
           borderRadius: 2,
           px: 2,
           py: 1.25,
@@ -110,7 +88,7 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
         {/* Next label */}
         <Typography
           variant="caption"
-          sx={{ color: 'rgba(255,255,255,0.7)', flex: 1, noWrap: true }}
+          sx={{ color: colors.carouselText, flex: 1 }}
           noWrap
         >
           Next: {slides[nextIndex].subtitle}
@@ -125,7 +103,7 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
                 width: i === activeIndex ? 20 : 8,
                 height: 8,
                 borderRadius: 4,
-                bgcolor: i === activeIndex ? '#CC0000' : 'rgba(255,255,255,0.4)',
+                bgcolor: i === activeIndex ? colors.red : colors.carouselDotInactive,
                 transition: 'width 0.3s ease, background-color 0.3s ease',
                 cursor: 'pointer',
               }}
@@ -138,14 +116,14 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
           <IconButton
             onClick={onPrev}
             size="small"
-            sx={{ color: 'rgba(255,255,255,0.8)', p: 0.5 }}
+            sx={{ color: colors.carouselIcon, p: 0.5 }}
           >
             <ChevronLeftIcon fontSize="small" />
           </IconButton>
           <IconButton
             onClick={onNext}
             size="small"
-            sx={{ color: 'rgba(255,255,255,0.8)', p: 0.5 }}
+            sx={{ color: colors.carouselIcon, p: 0.5 }}
           >
             <ChevronRightIcon fontSize="small" />
           </IconButton>

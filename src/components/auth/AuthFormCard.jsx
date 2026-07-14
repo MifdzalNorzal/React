@@ -6,6 +6,7 @@ import AppButton from '../common/AppButton'
 import BursaGoldDinarLogomarkSvg from '../../assets/Bursa Gold Dinar Logomark.svg'
 import AppTextField from '../common/AppTextField'
 import OrDivider from '../common/OrDivider'
+import { colors } from '../../theme/colors'
 
 export default function AuthFormCard({ onSubmit, onCreateAccount }) {
   const [email, setEmail] = useState('')
@@ -21,18 +22,25 @@ export default function AuthFormCard({ onSubmit, onCreateAccount }) {
         borderRadius: 3,
         px: { xs: 3, md: 5 },
         py: { xs: 4, md: 5 },
-        bgcolor: '#FFFFFF',
+        bgcolor: colors.white,
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+        boxShadow: `0 2px 12px ${colors.cardShadow}`,
       }}
     >
       {/* Welcome heading */}
       <Typography
         variant="body1"
         sx={{ textAlign: 'center', color: 'text.secondary', mb: 0.5 }}
+      >
+      </Typography>
+
+      <Typography
+        variant="h6"
+        fontWeight={700}
+        sx={{ textAlign: 'center', color: 'text.primary', mb: 1 }}
       >
         Welcome to
       </Typography>
@@ -86,7 +94,7 @@ export default function AuthFormCard({ onSubmit, onCreateAccount }) {
           display: 'block',
           width: '100%',
           textAlign: 'center',
-          color: '#1565C0',
+          color: colors.linkBlue,
           fontWeight: 700,
           cursor: 'pointer',
           background: 'none',

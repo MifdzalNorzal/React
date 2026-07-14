@@ -6,18 +6,9 @@ import CarouselPanel from '../components/auth/CarouselPanel'
 import AuthFormCard from '../components/auth/AuthFormCard'
 
 const SLIDES = [
-  {
-    title: 'Start investing in gold today',
-    subtitle: 'How it works',
-  },
-  {
-    title: 'Secure and regulated platform',
-    subtitle: 'Security features',
-  },
-  {
-    title: 'Quick and\nfree registration',
-    subtitle: 'Welcome to affordable investing',
-  },
+  { title: '',  subtitle: 'How it works' },
+  { title: '',  subtitle: 'Security features' },
+  { title: '',   subtitle: 'Welcome to affordable investing' },
 ]
 
 export default function LoginPage() {

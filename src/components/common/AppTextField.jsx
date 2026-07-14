@@ -1,4 +1,5 @@
 import TextField from '@mui/material/TextField'
+import { colors } from '../../theme/colors'
 
 export default function AppTextField({
   label,
@@ -22,13 +23,13 @@ export default function AppTextField({
       sx={{
         '& .MuiOutlinedInput-root': {
           borderRadius: 1.5,
-          bgcolor: '#FFFFFF',
-          '& fieldset': { borderColor: '#CCCCCC' },
-          '&:hover fieldset': { borderColor: '#AAAAAA' },
-          '&.Mui-focused fieldset': { borderColor: '#0A1764' },
+          bgcolor: colors.white,
+          '& fieldset': { borderColor: colors.inputBorder },
+          '&:hover fieldset': { borderColor: colors.inputBorderHover },
+          '&.Mui-focused fieldset': { borderColor: colors.navy },
         },
-        '& .MuiInputLabel-root': { color: '#9E9E9E' },
-        '& .MuiInputLabel-root.Mui-focused': { color: '#0A1764' },
+        '& .MuiInputLabel-root': { color: colors.inputLabel },
+        '& .MuiInputLabel-root.Mui-focused': { color: colors.navy },
         ...sx,
       }}
     />

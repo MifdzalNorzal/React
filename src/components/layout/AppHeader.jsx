@@ -9,13 +9,14 @@ import AppButton from '../common/AppButton'
 import BursaMalaysiaSvg from '../../assets/Bursa Malaysia.svg'
 import BursaLogomarkSvg from '../../assets/Bursa Logomark.svg'
 import BursaGoldDinarLogomarkSvg from '../../assets/Bursa Gold Dinar Logomark.svg'
+import { colors } from '../../theme/colors'
 
 export default function AppHeader() {
   return (
     <AppBar
       position="static"
       elevation={0}
-      sx={{ bgcolor: '#FFFFFF', borderBottom: '1px solid #E0E0E0' }}
+      sx={{ bgcolor: colors.white, borderBottom: `1px solid ${colors.borderLight}` }}
     >
       <Toolbar
         sx={{
@@ -25,7 +26,7 @@ export default function AppHeader() {
           alignItems: 'stretch',
         }}
       >
-        {/* Left: Bursa Malaysia logos — content centred within the stretched column */}
+        {/* Left: Bursa Malaysia logos */}
         <Stack direction="row" alignItems="center" spacing={0.5} sx={{ pr: 2 }}>
           <Box
             component="img"
@@ -42,7 +43,7 @@ export default function AppHeader() {
         </Stack>
 
         {/* Full-height divider */}
-        <Box sx={{ width: '1px', bgcolor: '#CCCCCC', flexShrink: 0 }} />
+        <Box sx={{ width: '1px', bgcolor: colors.divider, flexShrink: 0 }} />
 
         {/* Bursa Gold Dinar logomark */}
         <Box
@@ -54,29 +55,14 @@ export default function AppHeader() {
 
         {/* Right: BGD Microsite + language */}
         <Stack direction="row" alignItems="center" spacing={2} sx={{ ml: 'auto', pr: 1, alignSelf: 'center' }}>
-          <AppButton
-            variant="outlined"
-            color="secondary"
-            sx={{
-              borderRadius: '50px',
-              px: 3,
-              py: 0.75,
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              border: '1px solid #CC0000',
-              color: '#CC0000',
-              '&:hover': { border: '1px solid #AA0000', bgcolor: 'rgba(204,0,0,0.04)' },
-            }}
-          >
-            BGD Microsite
-          </AppButton>
+          <AppButton variant="microsite">BGD Microsite</AppButton>
           <Stack direction="row" alignItems="center" spacing={0.75}>
-            <IconButton sx={{ color: '#64320a', p: 0.1 ,}}>
+            <IconButton sx={{ color: colors.iconBrown, p: 0.1 }}>
               <LanguageIcon />
             </IconButton>
             <Typography
               variant="body2"
-              sx={{ color: '#0A1764', fontWeight: 700, fontSize: '0.65rem' }}
+              sx={{ color: colors.navy, fontWeight: 700, fontSize: '0.65rem' }}
             >
               EN
             </Typography>

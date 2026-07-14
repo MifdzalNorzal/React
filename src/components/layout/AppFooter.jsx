@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import GraphicPatternSvg from '../../assets/Graphic Pattern.svg'
+import { colors } from '../../theme/colors'
 
 const DEFAULT_LINKS = [
   { label: 'Platform Rules', href: '#' },
@@ -18,7 +19,6 @@ export default function AppFooter({
 }) {
   return (
     <Box component="footer" sx={{ mt: 'auto' }}>
-      {/* Graphic pattern — the blue wave + navy triangle decoration */}
       <Box sx={{ lineHeight: 0, overflow: 'hidden' }}>
         <Box
           component="img"
@@ -28,14 +28,13 @@ export default function AppFooter({
         />
       </Box>
 
-      {/* Copyright row */}
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          bgcolor: '#FFFFFF',
-          borderTop: '2px solid #0A1764',
+          bgcolor: colors.white,
+          borderTop: `2px solid ${colors.navy}`,
           px: { xs: 2, md: 4 },
           py: 2,
         }}
@@ -44,7 +43,6 @@ export default function AppFooter({
           {copyrightText}
         </Typography>
 
-        {/* Spacer — pushes links to the far right */}
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" spacing={2}>
@@ -55,7 +53,7 @@ export default function AppFooter({
               href={link.href}
               variant="caption"
               sx={{
-                color: '#1565C0',
+                color: colors.linkBlue,
                 fontWeight: 700,
                 textDecoration: 'none',
                 '&:hover': { textDecoration: 'underline' },

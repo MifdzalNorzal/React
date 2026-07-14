@@ -3,14 +3,15 @@ import { createRoot } from 'react-dom/client'
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import './index.css'
 import App from './App.jsx'
+import { colors } from './theme/colors'
 
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary:    { main: '#0A1764' },
-    secondary:  { main: '#CC0000' },
-    info:       { main: '#1565C0' },
-    background: { default: '#F0F0F0', paper: '#FFFFFF' },
+    primary:    { main: colors.navy },
+    secondary:  { main: colors.red },
+    info:       { main: colors.blue },
+    background: { default: colors.pageBg, paper: colors.white },
   },
   typography: {
     fontFamily: '"Roboto", system-ui, sans-serif',
