@@ -15,7 +15,6 @@ const ANIMATION_URLS = [carouselWelcomeUrl, carouselStartUrl, carouselQuickUrl]
 
 export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
   const nextIndex = (activeIndex + 1) % slides.length
-  const currentSlide = slides[activeIndex]
   const animContainerRef = useRef(null)
 
   useEffect(() => {
@@ -25,57 +24,34 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
       loop: true,
       autoplay: true,
       path: ANIMATION_URLS[activeIndex],
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid meet',
+      },
     })
     return () => anim.destroy()
   }, [activeIndex])
 
   return (
-    <Box
-      sx={{
-        bgcolor: colors.navy,
-        borderRadius: 3,
-        p: { xs: 3, md: 4 },
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        minHeight: 400,
-        overflow: 'hidden',
-        position: 'relative',
-      }}
-    >
-      {/* Slide title */}
-      <Typography
-        variant="h5"
-        sx={{
-          color: colors.white,
-          fontWeight: 700,
-          textAlign: 'center',
-          mt: 2,
-          lineHeight: 1.3,
-          whiteSpace: 'pre-line',
-        }}
-      >
-        {currentSlide.title}
-      </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 1 }}>
 
-      {/* Lottie animation */}
+      {/* Dark card — animation fills it edge-to-edge */}
       <Box
         sx={{
           flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          py: 2,
+          bgcolor: colors.navy,
+          borderRadius: 3,
+          overflow: 'hidden',
+          position: 'relative',
         }}
       >
-        <div ref={animContainerRef} style={{ width: '100%', maxWidth: 320 }} />
+        <div ref={animContainerRef} style={{ position: 'absolute', inset: 0 }} />
       </Box>
 
-      {/* Bottom carousel bar */}
+      {/* Nav bar — separate white bar below the dark card */}
       <Box
         sx={{
-          bgcolor: colors.carouselBar,
+          flexShrink: 0,
+          bgcolor: colors.white,
           borderRadius: 2,
           px: 2,
           py: 1.25,
@@ -85,16 +61,14 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
           gap: 1,
         }}
       >
-        {/* Next label */}
         <Typography
           variant="caption"
-          sx={{ color: colors.carouselText, flex: 1 }}
+          sx={{ color: 'text.secondary', flex: 1 }}
           noWrap
         >
           Next: {slides[nextIndex].subtitle}
         </Typography>
 
-        {/* Dot indicators */}
         <Stack direction="row" spacing={0.75} alignItems="center" sx={{ px: 1 }}>
           {slides.map((_, i) => (
             <Box
@@ -103,7 +77,7 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
                 width: i === activeIndex ? 20 : 8,
                 height: 8,
                 borderRadius: 4,
-                bgcolor: i === activeIndex ? colors.red : colors.carouselDotInactive,
+                bgcolor: i === activeIndex ? colors.red : colors.divider,
                 transition: 'width 0.3s ease, background-color 0.3s ease',
                 cursor: 'pointer',
               }}
@@ -111,20 +85,11 @@ export default function CarouselPanel({ slides, activeIndex, onPrev, onNext }) {
           ))}
         </Stack>
 
-        {/* Prev / Next buttons */}
         <Stack direction="row" spacing={0.25}>
-          <IconButton
-            onClick={onPrev}
-            size="small"
-            sx={{ color: colors.carouselIcon, p: 0.5 }}
-          >
+          <IconButton onClick={onPrev} size="small" sx={{ color: colors.red, p: 0.5 }}>
             <ChevronLeftIcon fontSize="small" />
           </IconButton>
-          <IconButton
-            onClick={onNext}
-            size="small"
-            sx={{ color: colors.carouselIcon, p: 0.5 }}
-          >
+          <IconButton onClick={onNext} size="small" sx={{ color: colors.red, p: 0.5 }}>
             <ChevronRightIcon fontSize="small" />
           </IconButton>
         </Stack>

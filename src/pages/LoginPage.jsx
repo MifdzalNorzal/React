@@ -4,11 +4,13 @@ import AppHeader from '../components/layout/AppHeader'
 import AppFooter from '../components/layout/AppFooter'
 import CarouselPanel from '../components/auth/CarouselPanel'
 import AuthFormCard from '../components/auth/AuthFormCard'
+import { layout } from '../theme/layout'
+import { colors } from '../theme/colors'
 
 const SLIDES = [
   { title: '',  subtitle: 'How it works' },
   { title: '',  subtitle: 'Security features' },
-  { title: '',   subtitle: 'Welcome to affordable investing' },
+  { title: '',  subtitle: 'Welcome to affordable investing' },
 ]
 
 export default function LoginPage() {
@@ -35,8 +37,21 @@ export default function LoginPage() {
         flexDirection: 'column',
         minHeight: '100vh',
         bgcolor: '#F0F0F0',
+        position: 'relative',
       }}
     >
+      <Box
+        sx={{
+          position: 'absolute',
+          left: '50%',
+          top: 0,
+          bottom: 0,
+          width: '1px',
+          bgcolor: colors.divider,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
       <AppHeader />
 
       {/* Main two-column content */}
@@ -46,18 +61,19 @@ export default function LoginPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          px: { xs: 2, sm: 4, md: 8 },
-          py: { xs: 3, md: 5 },
+          px: layout.contentPaddingX,
+          py: layout.contentPaddingY,
         }}
       >
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-            gap: { xs: 2, md: 3 },
+            gridTemplateColumns: { xs: '1fr', md: `${layout.carouselColumn} ${layout.formColumn}` },
+            gap: layout.columnGap,
             width: '100%',
-            maxWidth: 960,
+            maxWidth: layout.contentMaxWidth,
             alignItems: 'stretch',
+            gridAutoRows: layout.cardHeight,
           }}
         >
           <CarouselPanel
