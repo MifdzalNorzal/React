@@ -8,7 +8,7 @@ import AppTextField from '../common/AppTextField'
 import OrDivider from '../common/OrDivider'
 import { colors } from '../../theme/colors'
 
-export default function AuthFormCard({ onSubmit, onCreateAccount }) {
+export default function AuthFormCard({ onSubmit, onCreateAccount, isLoading = false }) {
   const [email, setEmail] = useState('')
 
   const handleSubmit = () => {
@@ -68,11 +68,11 @@ export default function AuthFormCard({ onSubmit, onCreateAccount }) {
       <AppButton
         variant="primary"
         fullWidth
-        disabled={!email.trim()}
+        disabled={!email.trim() || isLoading}
         onClick={handleSubmit}
         sx={{ mb: 1 }}
       >
-        Continue
+        {isLoading ? 'Please wait...' : 'Continue'}
       </AppButton>
 
       {/* Or divider */}

@@ -6,6 +6,8 @@ import CarouselPanel from '../components/auth/CarouselPanel'
 import AuthFormCard from '../components/auth/AuthFormCard'
 import { layout } from '../theme/layout'
 import { colors } from '../theme/colors'
+import { logger } from '../utils/logger'
+import { secureLoginCredentials } from '../controllers/secure.controller'
 
 const SLIDES = [
   { title: '',  subtitle: 'How it works' },
@@ -15,6 +17,7 @@ const SLIDES = [
 
 export default function LoginPage() {
   const [slideIndex, setSlideIndex] = useState(2)
+  const [isLoading, setIsLoading]   = useState(false)
 
   const handlePrev = () =>
     setSlideIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length)
@@ -22,12 +25,27 @@ export default function LoginPage() {
   const handleNext = () =>
     setSlideIndex((i) => (i + 1) % SLIDES.length)
 
-  const handleLogin = (email) => {
-    console.log('Continue with:', email)
+  const handleLogin = async (email) => {
+    setIsLoading(true)
+    try {
+      const res = await secureLoginCredentials(email)
+      if (res.code === 200) {
+        logger.apiInfo('POST', '/api/secure/login/credentials', null, { email }, res)
+      } else {
+        logger.apiError('POST', '/api/secure/login/credentials', null, { email }, {
+          message: res.message,
+          response: { status: res.code, statusText: res.message, data: res.data },
+        })
+      }
+    } catch (e) {
+      logger.apiError('POST', '/api/secure/login/credentials', null, { email }, e)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleCreateAccount = () => {
-    console.log('Navigate to create account')
+    logger.debug('Navigate to create account', 'LoginPage')
   }
 
   return (
@@ -85,6 +103,7 @@ export default function LoginPage() {
           <AuthFormCard
             onSubmit={handleLogin}
             onCreateAccount={handleCreateAccount}
+            isLoading={isLoading}
           />
         </Box>
       </Box>
